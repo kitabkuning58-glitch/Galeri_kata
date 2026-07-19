@@ -69,55 +69,18 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        ::selection {
-            background: var(--gold);
-            color: #000;
-        }
-
+        ::selection { background: var(--gold); color: #000; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-        /* ── AMBIENT BACKGROUND ── */
-        .ambient {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .ambient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .ambient-orb:nth-child(1) {
-            width: 600px; height: 600px;
-            background: var(--gold);
-            top: -200px; left: -100px;
-            animation-delay: 0s;
-        }
-
-        .ambient-orb:nth-child(2) {
-            width: 400px; height: 400px;
-            background: #4a3520;
-            bottom: -100px; right: -50px;
-            animation-delay: -7s;
-        }
-
-        .ambient-orb:nth-child(3) {
-            width: 300px; height: 300px;
-            background: var(--gold-dark);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -14s;
-            opacity: 0.08;
-        }
+        /* ── AMBIENT ── */
+        .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .ambient-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.15; animation: orbFloat 20s ease-in-out infinite; }
+        .ambient-orb:nth-child(1) { width: 600px; height: 600px; background: var(--gold); top: -200px; left: -100px; }
+        .ambient-orb:nth-child(2) { width: 400px; height: 400px; background: #4a3520; bottom: -100px; right: -50px; animation-delay: -7s; }
+        .ambient-orb:nth-child(3) { width: 300px; height: 300px; background: var(--gold-dark); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -14s; opacity: 0.08; }
 
         @keyframes orbFloat {
             0%, 100% { transform: translate(0, 0) scale(1); }
@@ -127,1239 +90,254 @@
 
         /* ── NAVBAR ── */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            padding: 0 32px;
-            transition: var(--transition);
-            background: transparent;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 32px; transition: var(--transition); background: transparent;
         }
-
         .navbar.scrolled {
-            background: rgba(5,5,5,0.85);
-            backdrop-filter: blur(20px) saturate(1.5);
-            -webkit-backdrop-filter: blur(20px) saturate(1.5);
-            border-bottom: 1px solid var(--border);
+            background: rgba(5,5,5,0.85); backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5); border-bottom: 1px solid var(--border);
         }
+        [data-theme="light"] .navbar.scrolled { background: rgba(250,248,244,0.85); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+        .nav-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; box-shadow: 0 2px 12px var(--gold-glow); }
+        .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        .nav-links { display: flex; align-items: center; gap: 8px; }
+        .nav-link { padding: 8px 16px; border-radius: var(--radius-sm); color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: var(--transition); cursor: pointer; border: none; background: none; }
+        .nav-link:hover { color: var(--text); background: var(--bg-glass); }
+        .nav-link.active { color: var(--gold); }
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
 
-        [data-theme="light"] .navbar.scrolled {
-            background: rgba(250,248,244,0.85);
-        }
+        .btn { padding: 10px 20px; border-radius: var(--radius-sm); border: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: inherit; white-space: nowrap; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; font-weight: 600; box-shadow: 0 2px 16px var(--gold-glow); }
+        .btn-gold:hover { box-shadow: 0 4px 24px var(--gold-glow-strong); transform: translateY(-1px); }
+        .btn-ghost { background: var(--bg-glass); color: var(--text-secondary); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--bg-card); color: var(--text); border-color: var(--border-hover); }
+        .btn-danger { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); }
+        .btn-danger:hover { background: rgba(239,68,68,0.2); }
+        .btn-icon { width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; transition: var(--transition); font-size: 18px; }
+        .btn-icon:hover { background: var(--bg-card); color: var(--text); border-color: var(--border-hover); }
 
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* ── ADMIN BADGE ── */
+        .admin-badge {
+            display: none; align-items: center; gap: 6px; padding: 6px 14px;
+            border-radius: 100px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+            color: var(--success); font-size: 12px; font-weight: 600;
         }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .nav-logo-icon {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #fff;
-            box-shadow: 0 2px 12px var(--gold-glow);
-        }
-
-        .nav-logo-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-link {
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition);
-            cursor: pointer;
-            border: none;
-            background: none;
-        }
-
-        .nav-link:hover {
-            color: var(--text);
-            background: var(--bg-glass);
-        }
-
-        .nav-link.active {
-            color: var(--gold);
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            border: none;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            font-family: inherit;
-            white-space: nowrap;
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: #000;
-            font-weight: 600;
-            box-shadow: 0 2px 16px var(--gold-glow);
-        }
-
-        .btn-gold:hover {
-            box-shadow: 0 4px 24px var(--gold-glow-strong);
-            transform: translateY(-1px);
-        }
-
-        .btn-ghost {
-            background: var(--bg-glass);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-card);
-            color: var(--text);
-            border-color: var(--border-hover);
-        }
-
-        .btn-icon {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            background: var(--bg-glass);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 18px;
-        }
-
-        .btn-icon:hover {
-            background: var(--bg-card);
-            color: var(--text);
-            border-color: var(--border-hover);
-        }
+        .admin-badge.visible { display: inline-flex; }
 
         /* ── HERO ── */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 24px 80px;
-            position: relative;
-        }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; background: var(--gold-glow); border: 1px solid rgba(201,169,110,0.2); color: var(--gold); font-size: 13px; font-weight: 500; margin-bottom: 32px; animation: fadeInUp 0.8s ease; }
+        .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 7vw, 80px); font-weight: 700; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px; animation: fadeInUp 0.8s ease 0.1s both; }
+        .hero h1 .gold { color: var(--gold); font-style: italic; }
+        .hero-desc { font-size: 18px; color: var(--text-secondary); max-width: 520px; line-height: 1.7; margin-bottom: 48px; animation: fadeInUp 0.8s ease 0.2s both; }
+        .hero-actions { display: flex; gap: 16px; align-items: center; animation: fadeInUp 0.8s ease 0.3s both; }
+        .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; animation: fadeInUp 0.8s ease 0.5s both; }
+        .hero-scroll .line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-muted), transparent); animation: scrollLine 2s ease-in-out infinite; }
+        @keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            border-radius: 100px;
-            background: var(--gold-glow);
-            border: 1px solid rgba(201,169,110,0.2);
-            color: var(--gold);
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 32px;
-            animation: fadeInUp 0.8s ease;
-        }
+        /* ── FEATURED ── */
+        .featured { max-width: 900px; margin: -40px auto 80px; padding: 0 24px; animation: fadeInUp 0.8s ease 0.4s both; }
+        .featured-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 60px 48px; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
+        .featured-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+        .featured-quote { font-family: 'Playfair Display', serif; font-size: clamp(22px, 3.5vw, 36px); line-height: 1.5; font-style: italic; font-weight: 400; color: var(--text); margin-bottom: 32px; transition: all 0.4s ease; }
+        .featured-author { display: flex; align-items: center; justify-content: center; gap: 16px; }
+        .featured-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #fff; }
+        .featured-author-info .name { font-weight: 600; font-size: 16px; }
+        .featured-author-info .source { font-size: 13px; color: var(--text-muted); }
 
-        .hero-badge .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(40px, 7vw, 80px);
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            letter-spacing: -2px;
-            animation: fadeInUp 0.8s ease 0.1s both;
-        }
-
-        .hero h1 .gold {
-            color: var(--gold);
-            font-style: italic;
-        }
-
-        .hero-desc {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 520px;
-            line-height: 1.7;
-            margin-bottom: 48px;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-            animation: fadeInUp 0.8s ease 0.3s both;
-        }
-
-        .hero-scroll {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: fadeInUp 0.8s ease 0.5s both;
-        }
-
-        .hero-scroll .line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--text-muted), transparent);
-            animation: scrollLine 2s ease-in-out infinite;
-        }
-
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── FEATURED QUOTE ── */
-        .featured {
-            max-width: 900px;
-            margin: -40px auto 80px;
-            padding: 0 24px;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .featured-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 60px 48px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .featured-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .featured-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 24px;
-        }
-
-        .featured-quote {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(22px, 3.5vw, 36px);
-            line-height: 1.5;
-            font-style: italic;
-            font-weight: 400;
-            color: var(--text);
-            margin-bottom: 32px;
-        }
-
-        .featured-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .featured-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 20px;
-            color: #fff;
-        }
-
-        .featured-author-info .name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .featured-author-info .source {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* ── STATS BAR ── */
-        .stats-bar {
-            max-width: 800px;
-            margin: 0 auto 80px;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 32px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .stat-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--gold);
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        /* ── STATS ── */
+        .stats-bar { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .stat-card { text-align: center; padding: 32px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); }
+        .stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
 
         /* ── SECTION HEADER ── */
-        .section-header {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px 32px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-
-        .section-subtitle {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        .section-header { max-width: 1200px; margin: 0 auto; padding: 0 24px 32px; display: flex; align-items: flex-end; justify-content: space-between; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+        .section-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 
         /* ── CATEGORIES ── */
-        .categories {
-            max-width: 1200px;
-            margin: 0 auto 40px;
-            padding: 0 24px;
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .categories { max-width: 1200px; margin: 0 auto 40px; padding: 0 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .cat-pill { padding: 10px 20px; border-radius: 100px; border: 1px solid var(--border); background: transparent; color: var(--text-secondary); font-size: 13px; font-weight: 500; cursor: pointer; transition: var(--transition); font-family: inherit; }
+        .cat-pill:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg-glass); }
+        .cat-pill.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
 
-        .cat-pill {
-            padding: 10px 20px;
-            border-radius: 100px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-
-        .cat-pill:hover {
-            border-color: var(--border-hover);
-            color: var(--text);
-            background: var(--bg-glass);
-        }
-
-        .cat-pill.active {
-            background: var(--gold);
-            color: #000;
-            border-color: var(--gold);
-            font-weight: 600;
-        }
-
-        /* ── UPLOAD ZONE ── */
-        .upload-section {
-            max-width: 800px;
-            margin: 0 auto 80px;
-            padding: 0 24px;
-        }
-
-        .upload-zone {
-            border: 2px dashed var(--border);
-            border-radius: var(--radius-lg);
-            padding: 56px 40px;
-            text-align: center;
-            transition: var(--transition);
-            cursor: pointer;
-            background: var(--bg-glass);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-zone::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, var(--gold-glow), transparent 70%);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .upload-zone:hover::before,
-        .upload-zone.dragover::before {
-            opacity: 1;
-        }
-
-        .upload-zone:hover,
-        .upload-zone.dragover {
-            border-color: var(--gold);
-        }
-
-        .upload-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: var(--gold-glow);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            position: relative;
-        }
-
-        .upload-zone h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .upload-zone p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .upload-zone .formats {
-            display: inline-flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .upload-zone .format-tag {
-            padding: 4px 12px;
-            border-radius: 6px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            font-size: 11px;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
+        /* ── UPLOAD ZONE (ADMIN ONLY) ── */
+        .upload-section { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; display: none; }
+        .upload-section.admin-visible { display: block; }
+        .upload-zone { border: 2px dashed var(--border); border-radius: var(--radius-lg); padding: 56px 40px; text-align: center; transition: var(--transition); cursor: pointer; background: var(--bg-glass); position: relative; overflow: hidden; }
+        .upload-zone::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--gold-glow), transparent 70%); opacity: 0; transition: var(--transition); }
+        .upload-zone:hover::before, .upload-zone.dragover::before { opacity: 1; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: var(--gold); }
+        .upload-icon { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%; background: var(--gold-glow); display: flex; align-items: center; justify-content: center; font-size: 28px; position: relative; }
+        .upload-zone h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .upload-zone p { color: var(--text-muted); font-size: 14px; }
+        .upload-zone .formats { display: inline-flex; gap: 8px; margin-top: 16px; }
+        .upload-zone .format-tag { padding: 4px 12px; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border); font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
         #fileInput { display: none; }
 
-        /* ── UPLOAD FORM ── */
-        .upload-form {
-            display: none;
-            max-width: 800px;
-            margin: 0 auto 80px;
-            padding: 0 24px;
-        }
-
+        /* ── UPLOAD FORM (ADMIN ONLY) ── */
+        .upload-form { display: none; max-width: 800px; margin: 0 auto 80px; padding: 0 24px; }
         .upload-form.visible { display: block; animation: fadeInUp 0.4s ease; }
-
-        .form-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold));
-        }
-
-        .form-preview {
-            display: flex;
-            gap: 28px;
-            margin-bottom: 28px;
-        }
-
-        .form-preview-img {
-            width: 220px;
-            height: 220px;
-            object-fit: cover;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-
-        .form-fields {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text);
-            font-size: 14px;
-            font-family: inherit;
-            transition: var(--transition);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 110px;
-            font-family: 'Playfair Display', serif;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px var(--gold-glow);
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 8px;
-        }
+        .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; position: relative; overflow: hidden; }
+        .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold)); }
+        .form-preview { display: flex; gap: 28px; margin-bottom: 28px; }
+        .form-preview-img { width: 220px; height: 220px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
+        .form-fields { flex: 1; display: flex; flex-direction: column; gap: 18px; }
+        .form-group label { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-family: inherit; transition: var(--transition); }
+        .form-group textarea { resize: vertical; min-height: 110px; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.6; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+        .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
 
         /* ── GALLERY ── */
-        .gallery-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px 120px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 24px;
-        }
+        .gallery-section { max-width: 1200px; margin: 0 auto; padding: 0 24px 120px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
 
         /* ── QUOTE CARD ── */
-        .quote-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            group: true;
-        }
-
-        .quote-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--border-hover);
-        }
-
-        .quote-card:hover .card-image {
-            transform: scale(1.03);
-        }
-
-        .card-image-wrap {
-            overflow: hidden;
-            position: relative;
-            height: 260px;
-        }
-
-        .card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-image-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 56px;
-            opacity: 0.3;
-        }
-
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 50%);
-            opacity: 0;
-            transition: var(--transition);
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 20px;
-        }
-
+        .quote-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: var(--transition); cursor: pointer; position: relative; }
+        .quote-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--border-hover); }
+        .quote-card:hover .card-image { transform: scale(1.03); }
+        .card-image-wrap { overflow: hidden; position: relative; height: 260px; }
+        .card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card)); display: flex; align-items: center; justify-content: center; font-size: 56px; opacity: 0.3; }
+        .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 50%); opacity: 0; transition: var(--transition); display: flex; align-items: flex-end; justify-content: center; padding: 20px; }
         .quote-card:hover .card-overlay { opacity: 1; }
+        .card-overlay-actions { display: flex; gap: 8px; }
+        .card-overlay-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); color: #fff; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .card-overlay-btn:hover { background: var(--gold); color: #000; transform: scale(1.1); }
+        .card-body { padding: 24px; }
+        .card-quote { font-family: 'Playfair Display', serif; font-size: 17px; line-height: 1.65; font-style: italic; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--text); }
+        .card-quote::before { content: '\201C'; color: var(--gold); font-size: 28px; font-weight: 700; line-height: 0; vertical-align: -8px; margin-right: 2px; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .card-author { display: flex; align-items: center; gap: 12px; }
+        .card-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #fff; }
+        .card-author-name { font-weight: 600; font-size: 13px; }
+        .card-author-source { font-size: 12px; color: var(--text-muted); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .card-category { padding: 5px 12px; border-radius: 100px; background: var(--gold-glow); color: var(--gold); font-size: 11px; font-weight: 600; }
 
-        .card-overlay-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .card-overlay-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .card-overlay-btn:hover {
-            background: var(--gold);
-            color: #000;
-            transform: scale(1.1);
-        }
-
-        .card-body {
-            padding: 24px;
-        }
-
-        .card-quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            line-height: 1.65;
-            font-style: italic;
-            margin-bottom: 20px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            color: var(--text);
-        }
-
-        .card-quote::before {
-            content: '"';
-            color: var(--gold);
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 0;
-            vertical-align: -8px;
-            margin-right: 2px;
-        }
-
-        .card-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .card-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            color: #fff;
-        }
-
-        .card-author-name {
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .card-author-source {
-            font-size: 12px;
-            color: var(--text-muted);
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .card-category {
-            padding: 5px 12px;
-            border-radius: 100px;
-            background: var(--gold-glow);
-            color: var(--gold);
-            font-size: 11px;
-            font-weight: 600;
-        }
+        /* ── ADMIN ACTIONS ON CARD ── */
+        .card-admin-actions { display: none; position: absolute; top: 12px; right: 12px; gap: 6px; z-index: 5; }
+        .card-admin-actions.visible { display: flex; }
+        .card-admin-btn { width: 34px; height: 34px; border-radius: 8px; border: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); color: #fff; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .card-admin-btn:hover { background: var(--danger); }
+        .card-admin-btn.edit-btn:hover { background: var(--gold); color: #000; }
 
         /* ── MODAL ── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            backdrop-filter: blur(16px);
-        }
-
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(16px); }
         .modal-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            max-width: 880px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.95) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 10;
-            transition: var(--transition);
-        }
-
+        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-width: 880px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); color: #fff; font-size: 20px; cursor: pointer; z-index: 10; transition: var(--transition); }
         .modal-close:hover { background: var(--danger); }
+        .modal-image { width: 100%; max-height: 450px; object-fit: cover; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+        .modal-body { padding: 48px; }
+        .modal-quote { font-family: 'Playfair Display', serif; font-size: 26px; line-height: 1.6; font-style: italic; margin-bottom: 32px; color: var(--text); }
+        .modal-author { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+        .modal-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; color: #fff; }
+        .modal-author-name { font-weight: 600; font-size: 18px; }
+        .modal-author-source { color: var(--text-muted); font-size: 14px; }
+        .modal-meta { display: flex; gap: 32px; color: var(--text-muted); font-size: 13px; margin-bottom: 32px; }
+        .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .modal-admin-actions { display: none; gap: 12px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--border); margin-top: 24px; }
+        .modal-admin-actions.visible { display: flex; }
 
-        .modal-image {
-            width: 100%;
-            max-height: 450px;
-            object-fit: cover;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-        }
+        /* ── LOGIN MODAL ── */
+        .login-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(16px); }
+        .login-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
+        .login-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-width: 400px; width: 100%; padding: 48px; text-align: center; animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .login-modal .lock-icon { font-size: 48px; margin-bottom: 20px; }
+        .login-modal h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 8px; }
+        .login-modal p { color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; }
+        .login-modal input { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 16px; font-family: inherit; text-align: center; letter-spacing: 4px; margin-bottom: 16px; transition: var(--transition); }
+        .login-modal input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+        .login-modal .login-error { color: var(--danger); font-size: 13px; margin-bottom: 12px; display: none; }
+        .login-modal .login-error.visible { display: block; }
 
-        .modal-body {
-            padding: 48px;
-        }
-
-        .modal-quote {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            line-height: 1.6;
-            font-style: italic;
-            margin-bottom: 32px;
-            color: var(--text);
-        }
-
-        .modal-author {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .modal-avatar {
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 22px;
-            color: #fff;
-        }
-
-        .modal-author-name {
-            font-weight: 600;
-            font-size: 18px;
-        }
-
-        .modal-author-source {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        .modal-meta {
-            display: flex;
-            gap: 32px;
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 32px;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        /* ── DONATE FLOATING BUTTON ── */
-        .donate-fab {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            z-index: 90;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .donate-menu {
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            padding: 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 220px;
-            animation: fadeInUp 0.3s ease;
-        }
-
+        /* ── DONATE ── */
+        .donate-fab { position: fixed; bottom: 32px; right: 32px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+        .donate-menu { display: none; flex-direction: column; gap: 8px; padding: 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); min-width: 220px; animation: fadeInUp 0.3s ease; }
         .donate-menu.visible { display: flex; }
-
-        .donate-menu-title {
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .donate-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
-            color: var(--text);
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition);
-            border: 1px solid var(--border);
-        }
-
-        .donate-link:hover {
-            background: var(--gold-glow);
-            border-color: var(--gold);
-            color: var(--gold);
-        }
-
-        .donate-link .icon {
-            font-size: 20px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .donate-btn {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: #000;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 24px var(--gold-glow-strong);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .donate-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 32px var(--gold-glow-strong);
-        }
-
-        .donate-btn .pulse-ring {
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            opacity: 0;
-            animation: donatePulse 2s ease-out infinite;
-        }
-
-        @keyframes donatePulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
+        .donate-menu-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+        .donate-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: var(--radius-sm); text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: var(--transition); border: 1px solid var(--border); }
+        .donate-link:hover { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
+        .donate-link .icon { font-size: 20px; width: 24px; text-align: center; }
+        .donate-btn { width: 56px; height: 56px; border-radius: 50%; border: none; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; font-size: 24px; cursor: pointer; box-shadow: 0 4px 24px var(--gold-glow-strong); transition: var(--transition); display: flex; align-items: center; justify-content: center; position: relative; }
+        .donate-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px var(--gold-glow-strong); }
+        .donate-btn .pulse-ring { position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--gold); opacity: 0; animation: donatePulse 2s ease-out infinite; }
+        @keyframes donatePulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(1.4); opacity: 0; } }
 
         /* ── DONATE MODAL ── */
-        .donate-modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            backdrop-filter: blur(16px);
-        }
-
+        .donate-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(16px); }
         .donate-modal-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
-
-        .donate-modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-lg);
-            max-width: 440px;
-            width: 100%;
-            padding: 40px;
-            text-align: center;
-            position: relative;
-            animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .donate-modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background: var(--bg-glass);
-            color: var(--text-muted);
-            font-size: 18px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
+        .donate-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-width: 440px; width: 100%; padding: 40px; text-align: center; position: relative; animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .donate-modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--bg-glass); color: var(--text-muted); font-size: 18px; cursor: pointer; transition: var(--transition); }
         .donate-modal-close:hover { color: var(--text); background: var(--bg-card-hover); }
-
-        .donate-modal .heart-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .donate-modal h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .donate-modal p {
-            color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .donate-amounts {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .donate-amount {
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-        }
-
-        .donate-amount:hover,
-        .donate-amount.selected {
-            border-color: var(--gold);
-            background: var(--gold-glow);
-            color: var(--gold);
-        }
-
-        .donate-methods {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 24px;
-        }
-
-        .donate-method {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 20px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            font-family: inherit;
-            width: 100%;
-        }
-
-        .donate-method:hover {
-            border-color: var(--gold);
-            background: var(--gold-glow);
-        }
-
+        .donate-modal .heart-icon { font-size: 48px; margin-bottom: 16px; animation: heartbeat 1.5s ease-in-out infinite; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .donate-modal h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 12px; }
+        .donate-modal p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; margin-bottom: 32px; }
+        .donate-amounts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+        .donate-amount { padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: inherit; }
+        .donate-amount:hover, .donate-amount.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+        .donate-methods { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+        .donate-method { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text); font-size: 15px; font-weight: 500; cursor: pointer; transition: var(--transition); text-decoration: none; font-family: inherit; width: 100%; }
+        .donate-method:hover { border-color: var(--gold); background: var(--gold-glow); }
         .donate-method .dm-icon { font-size: 24px; width: 32px; text-align: center; }
         .donate-method .dm-name { flex: 1; text-align: left; }
         .donate-method .dm-arrow { color: var(--text-muted); }
 
         /* ── EMPTY STATE ── */
-        .empty-state {
-            text-align: center;
-            padding: 100px 24px;
-            color: var(--text-muted);
-        }
-
-        .empty-state .icon {
-            font-size: 72px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .empty-state h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 24px;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
+        .empty-state { text-align: center; padding: 100px 24px; color: var(--text-muted); }
+        .empty-state .icon { font-size: 72px; margin-bottom: 20px; opacity: 0.3; }
+        .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--text); margin-bottom: 8px; }
 
         /* ── TOAST ── */
-        .toast {
-            position: fixed;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            padding: 14px 24px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 14px;
-            z-index: 2000;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: var(--shadow-lg);
-            white-space: nowrap;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
+        .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); padding: 14px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; z-index: 2000; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-lg); white-space: nowrap; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
         /* ── FOOTER ── */
-        .footer {
-            padding: 40px 24px;
-            text-align: center;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .footer a {
-            color: var(--gold);
-            text-decoration: none;
-        }
+        .footer { padding: 40px 24px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+        .footer a { color: var(--gold); text-decoration: none; }
+        .footer-login { cursor: pointer; opacity: 0.3; transition: var(--transition); }
+        .footer-login:hover { opacity: 1; color: var(--gold); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .navbar { padding: 0 16px; }
-
             .nav-links { display: none; }
-
             .nav-inner { height: 60px; }
-
             .hero { padding: 100px 20px 60px; min-height: auto; }
-
             .hero-actions { flex-direction: column; width: 100%; }
             .hero-actions .btn { width: 100%; justify-content: center; }
-
             .featured-card { padding: 36px 24px; }
-
             .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-
             .stat-card { padding: 20px 12px; }
             .stat-num { font-size: 28px; }
-
             .upload-section { margin-bottom: 48px; }
-
             .form-preview { flex-direction: column; align-items: center; }
             .form-preview-img { width: 100%; max-width: 300px; }
-
             .gallery-grid { grid-template-columns: 1fr; }
-
             .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-
             .modal-body { padding: 28px; }
             .modal-quote { font-size: 20px; }
             .modal-actions { flex-direction: column; }
             .modal-actions .btn { width: 100%; justify-content: center; }
-
             .donate-fab { bottom: 20px; right: 20px; }
             .donate-btn { width: 48px; height: 48px; font-size: 20px; }
             .donate-modal { padding: 28px; }
-            .donate-amounts { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-
             .card-image-wrap { height: 200px; }
-
             .categories { padding: 0 16px; }
             .cat-pill { padding: 8px 16px; font-size: 12px; }
+            .login-modal { padding: 32px 24px; }
         }
     </style>
 </head>
@@ -1381,31 +359,26 @@
             <div class="nav-links">
                 <a href="#featured" class="nav-link active">Unggulan</a>
                 <a href="#collection" class="nav-link">Koleksi</a>
-                <a href="#upload-section" class="nav-link">Upload</a>
             </div>
             <div class="nav-actions">
+                <div class="admin-badge" id="adminBadge">👑 Admin</div>
                 <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Ganti tema">🌙</button>
-                <button class="btn btn-gold" onclick="scrollToUpload()">✚ Upload</button>
+                <button class="btn btn-gold" id="uploadBtn" onclick="scrollToUpload()" style="display:none">✚ Upload</button>
+                <button class="btn btn-ghost" id="loginBtn" onclick="openLogin()">🔐</button>
+                <button class="btn btn-ghost" id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-badge">
-            <span class="dot"></span>
-            Koleksi Kutipan Dunia
-        </div>
+        <div class="hero-badge"><span class="dot"></span> Koleksi Kutipan Dunia</div>
         <h1>Kata-Kata yang<br><span class="gold">Menginspirasi</span></h1>
         <p class="hero-desc">Kumpulan kutipan dan foto terbaik dari para penulis, filsuf, dan pemikir dunia. Bagikan inspirasi, sebarkan kebijaksanaan.</p>
         <div class="hero-actions">
             <button class="btn btn-gold" onclick="scrollToCollection()">✦ Jelajahi Koleksi</button>
-            <button class="btn btn-ghost" onclick="scrollToUpload()">📷 Upload Kutipan</button>
         </div>
-        <div class="hero-scroll">
-            <span>Scroll</span>
-            <div class="line"></div>
-        </div>
+        <div class="hero-scroll"><span>Scroll</span><div class="line"></div></div>
     </section>
 
     <!-- FEATURED -->
@@ -1425,65 +398,41 @@
 
     <!-- STATS -->
     <div class="stats-bar">
-        <div class="stat-card">
-            <div class="stat-num" id="totalQuotes">0</div>
-            <div class="stat-label">Kutipan</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="totalAuthors">0</div>
-            <div class="stat-label">Penulis</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="totalCategories">0</div>
-            <div class="stat-label">Kategori</div>
-        </div>
+        <div class="stat-card"><div class="stat-num" id="totalQuotes">0</div><div class="stat-label">Kutipan</div></div>
+        <div class="stat-card"><div class="stat-num" id="totalAuthors">0</div><div class="stat-label">Penulis</div></div>
+        <div class="stat-card"><div class="stat-num" id="totalCategories">0</div><div class="stat-label">Kategori</div></div>
     </div>
 
-    <!-- UPLOAD -->
+    <!-- UPLOAD (ADMIN ONLY) -->
     <section class="upload-section" id="upload-section">
         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
             <div class="upload-icon">📷</div>
             <h3>Seret foto ke sini atau klik untuk upload</h3>
             <p>Tambahkan foto dan kutipan favoritmu</p>
             <div class="formats">
-                <span class="format-tag">JPG</span>
-                <span class="format-tag">PNG</span>
-                <span class="format-tag">WEBP</span>
-                <span class="format-tag">MAX 10MB</span>
+                <span class="format-tag">JPG</span><span class="format-tag">PNG</span>
+                <span class="format-tag">WEBP</span><span class="format-tag">MAX 10MB</span>
             </div>
         </div>
         <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
     </section>
 
-    <!-- UPLOAD FORM -->
+    <!-- UPLOAD FORM (ADMIN ONLY) -->
     <section class="upload-form" id="uploadForm">
         <div class="form-card">
             <div class="form-preview">
                 <img class="form-preview-img" id="previewImage" src="" alt="Preview">
                 <div class="form-fields">
-                    <div class="form-group">
-                        <label>Kutipan</label>
-                        <textarea id="quoteText" placeholder="Tulis kutipan yang menginspirasi..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Penulis</label>
-                        <input type="text" id="authorName" placeholder="Siapa penulisnya?">
-                    </div>
-                    <div class="form-group">
-                        <label>Kategori</label>
+                    <div class="form-group"><label>Kutipan</label><textarea id="quoteText" placeholder="Tulis kutipan yang menginspirasi..."></textarea></div>
+                    <div class="form-group"><label>Nama Penulis</label><input type="text" id="authorName" placeholder="Siapa penulisnya?"></div>
+                    <div class="form-group"><label>Kategori</label>
                         <select id="quoteCategory">
-                            <option value="motivasi">💪 Motivasi</option>
-                            <option value="cinta">❤️ Cinta</option>
-                            <option value="kehidupan">🌱 Kehidupan</option>
-                            <option value="filsafat">🧠 Filsafat</option>
-                            <option value="sastra">📖 Sastra</option>
-                            <option value="inspirasi">✨ Inspirasi</option>
+                            <option value="motivasi">💪 Motivasi</option><option value="cinta">❤️ Cinta</option>
+                            <option value="kehidupan">🌱 Kehidupan</option><option value="filsafat">🧠 Filsafat</option>
+                            <option value="sastra">📖 Sastra</option><option value="inspirasi">✨ Inspirasi</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Sumber (opsional)</label>
-                        <input type="text" id="quoteSource" placeholder="Judul buku, pidato, dll.">
-                    </div>
+                    <div class="form-group"><label>Sumber (opsional)</label><input type="text" id="quoteSource" placeholder="Judul buku, pidato, dll."></div>
                     <div class="form-actions">
                         <button class="btn btn-ghost" onclick="cancelUpload()">Batal</button>
                         <button class="btn btn-gold" onclick="publishQuote()">✦ Terbitkan</button>
@@ -1496,16 +445,12 @@
     <!-- COLLECTION -->
     <section class="gallery-section" id="collection">
         <div class="section-header">
-            <div>
-                <h2 class="section-title">Koleksi</h2>
-                <p class="section-subtitle">Jelajahi semua kutipan yang tersedia</p>
-            </div>
+            <div><h2 class="section-title">Koleksi</h2><p class="section-subtitle">Jelajahi semua kutipan yang tersedia</p></div>
             <div style="display:flex;gap:8px">
                 <button class="btn btn-ghost" onclick="sortGallery('newest')">Terbaru</button>
                 <button class="btn btn-ghost" onclick="sortGallery('author')">A-Z</button>
             </div>
         </div>
-
         <div class="categories" id="categoriesContainer">
             <button class="cat-pill active" onclick="filterByCategory('semua', this)">Semua</button>
             <button class="cat-pill" onclick="filterByCategory('motivasi', this)">💪 Motivasi</button>
@@ -1515,12 +460,9 @@
             <button class="cat-pill" onclick="filterByCategory('sastra', this)">📖 Sastra</button>
             <button class="cat-pill" onclick="filterByCategory('inspirasi', this)">✨ Inspirasi</button>
         </div>
-
         <div class="gallery-grid" id="galleryGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none">
-            <div class="icon">🖼️</div>
-            <h3>Belum ada koleksi</h3>
-            <p>Upload foto pertamamu dan tambahkan kutipan bermakna</p>
+            <div class="icon">🖼️</div><h3>Belum ada koleksi</h3><p>Upload foto pertamamu dan tambahkan kutipan bermakna</p>
         </div>
     </section>
 
@@ -1533,21 +475,29 @@
                 <div class="modal-quote" id="modalQuote"></div>
                 <div class="modal-author">
                     <div class="modal-avatar" id="modalAvatar"></div>
-                    <div>
-                        <div class="modal-author-name" id="modalAuthor"></div>
-                        <div class="modal-author-source" id="modalSource"></div>
-                    </div>
+                    <div><div class="modal-author-name" id="modalAuthor"></div><div class="modal-author-source" id="modalSource"></div></div>
                 </div>
-                <div class="modal-meta">
-                    <span id="modalDate"></span>
-                    <span id="modalCategory"></span>
-                </div>
+                <div class="modal-meta"><span id="modalDate"></span><span id="modalCategory"></span></div>
                 <div class="modal-actions">
                     <button class="btn btn-gold" onclick="copyQuote()">📋 Salin Kutipan</button>
                     <button class="btn btn-ghost" onclick="downloadImage()">⬇️ Download</button>
-                    <button class="btn btn-ghost" style="color:var(--danger)" onclick="deleteQuote()">🗑 Hapus</button>
+                </div>
+                <div class="modal-admin-actions" id="modalAdminActions">
+                    <button class="btn btn-danger" onclick="deleteQuote()">🗑 Hapus Kutipan</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div class="login-overlay" id="loginOverlay" onclick="closeLogin(event)">
+        <div class="login-modal" onclick="event.stopPropagation()">
+            <div class="lock-icon">🔐</div>
+            <h2>Admin Login</h2>
+            <p>Masukkan password admin untuk mengelola konten</p>
+            <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')attemptLogin()">
+            <div class="login-error" id="loginError">❌ Password salah</div>
+            <button class="btn btn-gold" onclick="attemptLogin()" style="width:100%;justify-content:center">Masuk</button>
         </div>
     </div>
 
@@ -1555,23 +505,11 @@
     <div class="donate-fab">
         <div class="donate-menu" id="donateMenu">
             <div class="donate-menu-title">Dukung kami</div>
-            <button class="donate-link" onclick="openDonateModal()">
-                <span class="icon">☕</span> Trakteer / Saweria
-            </button>
-            <a href="https://saweria.co/galerikata" target="_blank" class="donate-link">
-                <span class="icon">💛</span> Saweria
-            </a>
-            <a href="https://trakteer.id/galerikata" target="_blank" class="donate-link">
-                <span class="icon">🎁</span> Trakteer
-            </a>
-            <a href="https://ko-fi.com/galerikata" target="_blank" class="donate-link">
-                <span class="icon">☕</span> Ko-fi
-            </a>
+            <a href="https://saweria.co/galerikata" target="_blank" class="donate-link"><span class="icon">💛</span> Saweria</a>
+            <a href="https://trakteer.id/galerikata" target="_blank" class="donate-link"><span class="icon">🎁</span> Trakteer</a>
+            <a href="https://ko-fi.com/galerikata" target="_blank" class="donate-link"><span class="icon">☕</span> Ko-fi</a>
         </div>
-        <button class="donate-btn" onclick="toggleDonateMenu()" title="Dukung kami">
-            ❤️
-            <div class="pulse-ring"></div>
-        </button>
+        <button class="donate-btn" onclick="toggleDonateMenu()" title="Dukung kami">❤️<div class="pulse-ring"></div></button>
     </div>
 
     <!-- DONATE MODAL -->
@@ -1580,33 +518,16 @@
             <button class="donate-modal-close" onclick="closeDonateModal()">✕</button>
             <div class="heart-icon">💛</div>
             <h2>Dukung Galeri Kata</h2>
-            <p>Kutipan yang menginspirasi ini gratis untuk semua orang. Jika kamu merasa terbantu, pertimbangkan untuk memberikan dukungan agar kami terus berkarya.</p>
+            <p>Kutipan yang menginspirasi ini gratis untuk semua orang. Jika kamu merasa terbantu, pertimbangkan untuk memberikan dukungan.</p>
             <div class="donate-amounts">
                 <button class="donate-amount" onclick="selectAmount(this, 10000)">Rp 10K</button>
                 <button class="donate-amount selected" onclick="selectAmount(this, 25000)">Rp 25K</button>
                 <button class="donate-amount" onclick="selectAmount(this, 50000)">Rp 50K</button>
             </div>
             <div class="donate-methods">
-                <a href="https://saweria.co/galerikata" target="_blank" class="donate-method">
-                    <span class="dm-icon">💛</span>
-                    <span class="dm-name">Saweria</span>
-                    <span class="dm-arrow">→</span>
-                </a>
-                <a href="https://trakteer.id/galerikata" target="_blank" class="donate-method">
-                    <span class="dm-icon">🎁</span>
-                    <span class="dm-name">Trakteer</span>
-                    <span class="dm-arrow">→</span>
-                </a>
-                <a href="https://ko-fi.com/galerikata" target="_blank" class="donate-method">
-                    <span class="dm-icon">☕</span>
-                    <span class="dm-name">Ko-fi</span>
-                    <span class="dm-arrow">→</span>
-                </a>
-                <button class="donate-method" onclick="copyRekening()" style="border:1px dashed var(--border-hover)">
-                    <span class="dm-icon">🏦</span>
-                    <span class="dm-name">Transfer Bank (BCA)</span>
-                    <span class="dm-arrow">📋</span>
-                </button>
+                <a href="https://saweria.co/galerikata" target="_blank" class="donate-method"><span class="dm-icon">💛</span><span class="dm-name">Saweria</span><span class="dm-arrow">→</span></a>
+                <a href="https://trakteer.id/galerikata" target="_blank" class="donate-method"><span class="dm-icon">🎁</span><span class="dm-name">Trakteer</span><span class="dm-arrow">→</span></a>
+                <a href="https://ko-fi.com/galerikata" target="_blank" class="donate-method"><span class="dm-icon">☕</span><span class="dm-name">Ko-fi</span><span class="dm-arrow">→</span></a>
             </div>
         </div>
     </div>
@@ -1617,7 +538,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <p>✦ Galeri Kata — Koleksi Kutipan & Foto Penulis</p>
-        <p style="margin-top:8px">Dibuat dengan ❤️ · <a href="https://github.com/kitabkuning58-glitch/Galeri_kata" target="_blank">GitHub</a></p>
+        <p style="margin-top:8px">Dibuat dengan ❤️ · <a href="https://github.com/kitabkuning58-glitch/Galeri_kata" target="_blank">GitHub</a> · <span class="footer-login" onclick="openLogin()">⚙️</span></p>
     </footer>
 
     <script>
@@ -1627,31 +548,93 @@
         let currentSort = 'newest';
         let currentQuoteId = null;
         let tempImageData = null;
-        let selectedDonateAmount = 25000;
+        let isAdmin = false;
 
-        // ═══ CONFIG — EDIT INI UNTUK GANTI LINK DONATE ═══
-        const CONFIG = {
-            saweria: 'https://saweria.co/galerikata',
-            trakteer: 'https://trakteer.id/galerikata',
-            kofi: 'https://ko-fi.com/galerikata',
-            bank: { name: 'BCA', number: '1234567890', holder: 'GALERI KATA' }
-        };
+        // ═══ ADMIN PASSWORD (ganti di sini!) ═══
+        // Default password: "galerikata2024"
+        // Untuk ganti password, hash baru di: https://emn178.github.io/online-tools/sha256.html
+        const ADMIN_PASSWORD_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; // hash dari "galerikata2024"
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ═══ ADMIN SYSTEM ═══
+        function checkAdmin() {
+            isAdmin = sessionStorage.getItem('galeri_admin') === 'true';
+            updateAdminUI();
+        }
+
+        function updateAdminUI() {
+            // Show/hide admin-only elements
+            document.querySelectorAll('.upload-section').forEach(el => el.classList.toggle('admin-visible', isAdmin));
+            document.getElementById('uploadBtn').style.display = isAdmin ? 'inline-flex' : 'none';
+            document.getElementById('adminBadge').classList.toggle('visible', isAdmin);
+            document.getElementById('loginBtn').style.display = isAdmin ? 'none' : 'inline-flex';
+            document.getElementById('logoutBtn').style.display = isAdmin ? 'inline-flex' : 'none';
+            document.getElementById('modalAdminActions').classList.toggle('visible', isAdmin);
+
+            // Show/hide admin actions on cards
+            document.querySelectorAll('.card-admin-actions').forEach(el => el.classList.toggle('visible', isAdmin));
+        }
+
+        function openLogin() {
+            document.getElementById('loginOverlay').classList.add('visible');
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').classList.remove('visible');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('loginPassword').focus(), 100);
+        }
+
+        function closeLogin(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('loginOverlay').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        async function attemptLogin() {
+            const input = document.getElementById('loginPassword').value;
+            const hash = await hashPassword(input);
+
+            if (hash === ADMIN_PASSWORD_HASH) {
+                isAdmin = true;
+                sessionStorage.setItem('galeri_admin', 'true');
+                updateAdminUI();
+                closeLogin();
+                renderGallery();
+                showToast('✅ Login berhasil! Selamat datang, Admin.');
+            } else {
+                document.getElementById('loginError').classList.add('visible');
+                document.getElementById('loginPassword').value = '';
+            }
+        }
+
+        function logout() {
+            isAdmin = false;
+            sessionStorage.removeItem('galeri_admin');
+            updateAdminUI();
+            renderGallery();
+            showToast('👋 Logout berhasil.');
+        }
 
         // ═══ INIT ═══
         document.addEventListener('DOMContentLoaded', () => {
+            checkAdmin();
             renderGallery();
             updateStats();
             initDragDrop();
-            initSearch();
             initScrollEffects();
             initFeaturedRotation();
         });
 
         // ═══ SCROLL EFFECTS ═══
         function initScrollEffects() {
-            const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
+                document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
             });
         }
 
@@ -1664,14 +647,7 @@
                 { quote: "Aku berpikir, maka aku ada.", author: "René Descartes", source: "Principia Philosophiae", initial: "R" },
                 { quote: "Manusia yang hebat lahir dari kegagalan, bukan dari kesuksesan.", author: "Andrea Hirata", source: "Laskar Pelangi", initial: "A" }
             ];
-
             let idx = 0;
-            const quoteEl = document.getElementById('featuredQuote');
-            const avatarEl = document.getElementById('featuredAvatar');
-            const nameEl = document.getElementById('featuredName');
-            const sourceEl = document.getElementById('featuredSource');
-
-            // Merge with user quotes
             const allFeatured = [...featuredQuotes, ...quotes.slice(0, 5).map(q => ({
                 quote: q.quote, author: q.author, source: q.source || '', initial: q.author[0].toUpperCase()
             }))];
@@ -1681,15 +657,13 @@
                     idx = (idx + 1) % allFeatured.length;
                     const q = allFeatured[idx];
                     const card = document.querySelector('.featured-card');
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(10px)';
+                    card.style.opacity = '0'; card.style.transform = 'translateY(10px)';
                     setTimeout(() => {
-                        quoteEl.textContent = `"${q.quote}"`;
-                        avatarEl.textContent = q.initial;
-                        nameEl.textContent = q.author;
-                        sourceEl.textContent = q.source;
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
+                        document.getElementById('featuredQuote').textContent = `"${q.quote}"`;
+                        document.getElementById('featuredAvatar').textContent = q.initial;
+                        document.getElementById('featuredName').textContent = q.author;
+                        document.getElementById('featuredSource').textContent = q.source;
+                        card.style.opacity = '1'; card.style.transform = 'translateY(0)';
                     }, 300);
                 }, 6000);
             }
@@ -1700,18 +674,10 @@
             const zone = document.getElementById('uploadZone');
             zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
             zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-            zone.addEventListener('drop', e => {
-                e.preventDefault();
-                zone.classList.remove('dragover');
-                const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) processFile(file);
-            });
+            zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files[0]?.type?.startsWith('image/')) processFile(e.dataTransfer.files[0]); });
         }
 
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) processFile(file);
-        }
+        function handleFileSelect(e) { if (e.target.files[0]) processFile(e.target.files[0]); }
 
         function processFile(file) {
             if (file.size > 10 * 1024 * 1024) { showToast('⚠️ File terlalu besar (max 10MB)'); return; }
@@ -1725,26 +691,17 @@
             reader.readAsDataURL(file);
         }
 
-        // ═══ PUBLISH ═══
+        // ═══ PUBLISH (ADMIN ONLY) ═══
         function publishQuote() {
+            if (!isAdmin) return;
             const quote = document.getElementById('quoteText').value.trim();
             const author = document.getElementById('authorName').value.trim();
             const category = document.getElementById('quoteCategory').value;
             const source = document.getElementById('quoteSource').value.trim();
-
             if (!quote || !author) { showToast('⚠️ Isi kutipan dan nama penulis'); return; }
 
-            quotes.unshift({
-                id: Date.now().toString(),
-                image: tempImageData,
-                quote, author, category, source,
-                createdAt: new Date().toISOString()
-            });
-
-            saveQuotes();
-            renderGallery();
-            updateStats();
-            cancelUpload();
+            quotes.unshift({ id: Date.now().toString(), image: tempImageData, quote, author, category, source, createdAt: new Date().toISOString() });
+            saveQuotes(); renderGallery(); updateStats(); cancelUpload();
             showToast('✅ Kutipan berhasil dipublikasikan!');
         }
 
@@ -1761,36 +718,22 @@
             const empty = document.getElementById('emptyState');
 
             let filtered = currentFilter !== 'semua' ? quotes.filter(q => q.category === currentFilter) : [...quotes];
+            if (currentSort === 'author') filtered.sort((a, b) => a.author.localeCompare(b.author));
+            else filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-            const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
-            if (search) {
-                filtered = filtered.filter(q => q.quote.toLowerCase().includes(search) || q.author.toLowerCase().includes(search));
-            }
-
-            if (currentSort === 'author') {
-                filtered.sort((a, b) => a.author.localeCompare(b.author));
-            } else {
-                filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-            }
-
-            if (filtered.length === 0) {
-                grid.innerHTML = '';
-                empty.style.display = 'block';
-                return;
-            }
-
+            if (filtered.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
             empty.style.display = 'none';
+
             grid.innerHTML = filtered.map(q => `
                 <div class="quote-card" onclick="openModal('${q.id}')">
+                    <div class="card-admin-actions ${isAdmin ? 'visible' : ''}">
+                        <button class="card-admin-btn" onclick="event.stopPropagation();deleteQuoteById('${q.id}')" title="Hapus">🗑</button>
+                    </div>
                     <div class="card-image-wrap">
-                        ${q.image
-                            ? `<img class="card-image" src="${q.image}" alt="${q.author}" loading="lazy">`
-                            : `<div class="card-image-placeholder">✦</div>`
-                        }
+                        ${q.image ? `<img class="card-image" src="${q.image}" alt="${q.author}" loading="lazy">` : `<div class="card-image-placeholder">✦</div>`}
                         <div class="card-overlay">
                             <div class="card-overlay-actions">
                                 <button class="card-overlay-btn" onclick="event.stopPropagation();copyQuoteById('${q.id}')" title="Salin">📋</button>
-                                <button class="card-overlay-btn" onclick="event.stopPropagation();deleteQuoteById('${q.id}')" title="Hapus">🗑</button>
                             </div>
                         </div>
                     </div>
@@ -1799,10 +742,7 @@
                         <div class="card-footer">
                             <div class="card-author">
                                 <div class="card-avatar">${q.author.charAt(0).toUpperCase()}</div>
-                                <div>
-                                    <div class="card-author-name">${escapeHtml(q.author)}</div>
-                                    <div class="card-author-source">${q.source || getCategoryLabel(q.category)}</div>
-                                </div>
+                                <div><div class="card-author-name">${escapeHtml(q.author)}</div><div class="card-author-source">${q.source || getCategoryLabel(q.category)}</div></div>
                             </div>
                             <div class="card-category">${getCategoryLabel(q.category)}</div>
                         </div>
@@ -1816,180 +756,65 @@
             const q = quotes.find(x => x.id === id);
             if (!q) return;
             currentQuoteId = id;
-
             const modalImage = document.getElementById('modalImage');
-            modalImage.src = q.image || '';
-            modalImage.style.display = q.image ? 'block' : 'none';
+            modalImage.src = q.image || ''; modalImage.style.display = q.image ? 'block' : 'none';
             document.getElementById('modalQuote').textContent = `"${q.quote}"`;
             document.getElementById('modalAvatar').textContent = q.author.charAt(0).toUpperCase();
             document.getElementById('modalAuthor').textContent = q.author;
             document.getElementById('modalSource').textContent = q.source || getCategoryLabel(q.category);
             document.getElementById('modalDate').textContent = '📅 ' + new Date(q.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             document.getElementById('modalCategory').textContent = getCategoryLabel(q.category);
+            document.getElementById('modalAdminActions').classList.toggle('visible', isAdmin);
             document.getElementById('modalOverlay').classList.add('visible');
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal(e) {
-            if (e && e.target !== e.currentTarget) return;
-            document.getElementById('modalOverlay').classList.remove('visible');
-            document.body.style.overflow = '';
-            currentQuoteId = null;
-        }
+        function closeModal(e) { if (e && e.target !== e.currentTarget) return; document.getElementById('modalOverlay').classList.remove('visible'); document.body.style.overflow = ''; currentQuoteId = null; }
 
-        function copyQuote() {
-            const q = quotes.find(x => x.id === currentQuoteId);
-            if (!q) return;
-            navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`);
-            showToast('📋 Kutipan disalin!');
-        }
-
-        function copyQuoteById(id) {
-            const q = quotes.find(x => x.id === id);
-            if (!q) return;
-            navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`);
-            showToast('📋 Kutipan disalin!');
-        }
-
-        function downloadImage() {
-            const q = quotes.find(x => x.id === currentQuoteId);
-            if (!q || !q.image) return;
-            const a = document.createElement('a');
-            a.href = q.image;
-            a.download = `${q.author.replace(/\s+/g, '_')}_quote.jpg`;
-            a.click();
-        }
+        function copyQuote() { const q = quotes.find(x => x.id === currentQuoteId); if (!q) return; navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`); showToast('📋 Kutipan disalin!'); }
+        function copyQuoteById(id) { const q = quotes.find(x => x.id === id); if (!q) return; navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`); showToast('📋 Kutipan disalin!'); }
+        function downloadImage() { const q = quotes.find(x => x.id === currentQuoteId); if (!q?.image) return; const a = document.createElement('a'); a.href = q.image; a.download = `${q.author.replace(/\s+/g, '_')}_quote.jpg`; a.click(); }
 
         function deleteQuote() {
+            if (!isAdmin) return;
             if (!confirm('Hapus kutipan ini?')) return;
-            quotes = quotes.filter(x => x.id !== currentQuoteId);
-            saveQuotes();
-            closeModal();
-            renderGallery();
-            updateStats();
+            quotes = quotes.filter(x => x.id !== currentQuoteId); saveQuotes(); closeModal(); renderGallery(); updateStats();
             showToast('🗑 Kutipan dihapus');
         }
 
         function deleteQuoteById(id) {
+            if (!isAdmin) return;
             if (!confirm('Hapus kutipan ini?')) return;
-            quotes = quotes.filter(x => x.id !== id);
-            saveQuotes();
-            renderGallery();
-            updateStats();
+            quotes = quotes.filter(x => x.id !== id); saveQuotes(); renderGallery(); updateStats();
             showToast('🗑 Kutipan dihapus');
         }
 
-        // ═══ FILTER & SORT ═══
-        function filterByCategory(cat, el) {
-            currentFilter = cat;
-            document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            renderGallery();
-        }
-
-        function sortGallery(sort) {
-            currentSort = sort;
-            renderGallery();
-        }
-
-        function initSearch() {
-            // Add search input to nav dynamically
-            // For now, search is handled if present
-        }
+        function filterByCategory(cat, el) { currentFilter = cat; document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active')); el.classList.add('active'); renderGallery(); }
+        function sortGallery(sort) { currentSort = sort; renderGallery(); }
 
         // ═══ DONATE ═══
-        function toggleDonateMenu() {
-            const menu = document.getElementById('donateMenu');
-            menu.classList.toggle('visible');
-        }
+        function toggleDonateMenu() { document.getElementById('donateMenu').classList.toggle('visible'); }
+        function openDonateModal() { document.getElementById('donateMenu').classList.remove('visible'); document.getElementById('donateModalOverlay').classList.add('visible'); document.body.style.overflow = 'hidden'; }
+        function closeDonateModal(e) { if (e && e.target !== e.currentTarget) return; document.getElementById('donateModalOverlay').classList.remove('visible'); document.body.style.overflow = ''; }
+        function selectAmount(el, amount) { document.querySelectorAll('.donate-amount').forEach(b => b.classList.remove('selected')); el.classList.add('selected'); }
 
-        function openDonateModal() {
-            document.getElementById('donateMenu').classList.remove('visible');
-            document.getElementById('donateModalOverlay').classList.add('visible');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDonateModal(e) {
-            if (e && e.target !== e.currentTarget) return;
-            document.getElementById('donateModalOverlay').classList.remove('visible');
-            document.body.style.overflow = '';
-        }
-
-        function selectAmount(el, amount) {
-            document.querySelectorAll('.donate-amount').forEach(b => b.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedDonateAmount = amount;
-        }
-
-        function copyRekening() {
-            navigator.clipboard.writeText(CONFIG.bank.number);
-            showToast(`📋 Nomor rekening ${CONFIG.bank.name} disalin: ${CONFIG.bank.number}`);
-        }
-
-        // Close donate menu on outside click
-        document.addEventListener('click', e => {
-            const fab = document.querySelector('.donate-fab');
-            if (fab && !fab.contains(e.target)) {
-                document.getElementById('donateMenu').classList.remove('visible');
-            }
-        });
+        document.addEventListener('click', e => { const fab = document.querySelector('.donate-fab'); if (fab && !fab.contains(e.target)) document.getElementById('donateMenu').classList.remove('visible'); });
 
         // ═══ HELPERS ═══
-        function saveQuotes() {
-            localStorage.setItem('galeri_kata_quotes', JSON.stringify(quotes));
-        }
-
+        function saveQuotes() { localStorage.setItem('galeri_kata_quotes', JSON.stringify(quotes)); }
         function updateStats() {
             document.getElementById('totalQuotes').textContent = quotes.length;
             document.getElementById('totalAuthors').textContent = new Set(quotes.map(q => q.author)).size;
             document.getElementById('totalCategories').textContent = new Set(quotes.map(q => q.category)).size;
         }
-
-        function getCategoryLabel(cat) {
-            return { motivasi: '💪 Motivasi', cinta: '❤️ Cinta', kehidupan: '🌱 Kehidupan', filsafat: '🧠 Filsafat', sastra: '📖 Sastra', inspirasi: '✨ Inspirasi' }[cat] || cat;
-        }
-
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        function scrollToUpload() {
-            document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function scrollToCollection() {
-            document.getElementById('collection').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isLight = html.getAttribute('data-theme') === 'light';
-            html.setAttribute('data-theme', isLight ? '' : 'light');
-            document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀️';
-            localStorage.setItem('galeri_kata_theme', isLight ? 'dark' : 'light');
-        }
-
-        if (localStorage.getItem('galeri_kata_theme') === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light');
-            setTimeout(() => { document.getElementById('themeBtn').textContent = '☀️'; }, 0);
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.className = 'toast show';
-            setTimeout(() => toast.className = 'toast', 3000);
-        }
-
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeDonateModal();
-                document.getElementById('donateMenu').classList.remove('visible');
-            }
-        });
+        function getCategoryLabel(cat) { return { motivasi: '💪 Motivasi', cinta: '❤️ Cinta', kehidupan: '🌱 Kehidupan', filsafat: '🧠 Filsafat', sastra: '📖 Sastra', inspirasi: '✨ Inspirasi' }[cat] || cat; }
+        function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+        function scrollToUpload() { document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' }); }
+        function scrollToCollection() { document.getElementById('collection').scrollIntoView({ behavior: 'smooth' }); }
+        function toggleTheme() { const html = document.documentElement; const isLight = html.getAttribute('data-theme') === 'light'; html.setAttribute('data-theme', isLight ? '' : 'light'); document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀️'; localStorage.setItem('galeri_kata_theme', isLight ? 'dark' : 'light'); }
+        if (localStorage.getItem('galeri_kata_theme') === 'light') { document.documentElement.setAttribute('data-theme', 'light'); setTimeout(() => { document.getElementById('themeBtn').textContent = '☀️'; }, 0); }
+        function showToast(msg) { const toast = document.getElementById('toast'); toast.textContent = msg; toast.className = 'toast show'; setTimeout(() => toast.className = 'toast', 3000); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeDonateModal(); closeLogin(); document.getElementById('donateMenu').classList.remove('visible'); } });
 
         // ═══ SAMPLE DATA ═══
         if (quotes.length === 0) {
@@ -2001,9 +826,7 @@
                 { id: 's5', image: null, quote: 'Manusia yang hebat lahir dari kegagalan, bukan dari kesuksesan.', author: 'Andrea Hirata', category: 'sastra', source: 'Laskar Pelangi', createdAt: new Date(Date.now() - 432000000).toISOString() },
                 { id: 's6', image: null, quote: 'Aku berpikir, maka aku ada.', author: 'René Descartes', category: 'filsafat', source: 'Principia Philosophiae', createdAt: new Date(Date.now() - 518400000).toISOString() }
             ];
-            saveQuotes();
-            renderGallery();
-            updateStats();
+            saveQuotes(); renderGallery(); updateStats();
         }
     </script>
 </body>
