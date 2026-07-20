@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Kata — Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #050505;
+            --bg-elevated: #0d0d0d;
+            --bg-card: #111113;
+            --bg-card-hover: #18181b;
+            --bg-glass: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
+            --text: #f0ece4;
+            --text-secondary: #8a8578;
+            --text-muted: #5a5549;
+            --gold: #c9a96e;
+            --gold-light: #dfc08a;
+            --gold-dark: #9a7d4e;
+            --gold-glow: rgba(201,169,110,0.12);
+            --gold-glow-strong: rgba(201,169,110,0.25);
+            --accent: #c9a96e;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.4);
+            --shadow-lg: 0 16px 64px rgba(0,0,0,0.6);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection { background: var(--gold); color: #000; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ── AMBIENT ── */
+        .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .ambient-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.15; animation: orbFloat 20s ease-in-out infinite; }
+        .ambient-orb:nth-child(1) { width: 600px; height: 600px; background: var(--gold); top: -200px; left: -100px; }
+        .ambient-orb:nth-child(2) { width: 400px; height: 400px; background: #4a3520; bottom: -100px; right: -50px; animation-delay: -7s; }
+        .ambient-orb:nth-child(3) { width: 300px; height: 300px; background: var(--gold-dark); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -14s; opacity: 0.08; }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 30px) scale(0.95); }
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 32px;
+            background: rgba(5,5,5,0.85); backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5); border-bottom: 1px solid var(--border);
+        }
+        .nav-inner { max-width: 1200px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+        .nav-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; box-shadow: 0 2px 12px var(--gold-glow); }
+        .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        .nav-logo-sub { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+        .admin-badge {
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+            border-radius: 100px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+            color: var(--success); font-size: 12px; font-weight: 600;
+        }
+
+        .btn { padding: 10px 20px; border-radius: var(--radius-sm); border: none; font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: inherit; white-space: nowrap; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; font-weight: 600; box-shadow: 0 2px 16px var(--gold-glow); }
+        .btn-gold:hover { box-shadow: 0 4px 24px var(--gold-glow-strong); transform: translateY(-1px); }
+        .btn-ghost { background: var(--bg-glass); color: var(--text-secondary); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--bg-card); color: var(--text); border-color: var(--border-hover); }
+        .btn-danger { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); }
+        .btn-danger:hover { background: rgba(239,68,68,0.2); }
+
+        /* ── LOGIN MODAL ── */
+        .login-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000;
+            display: flex; align-items: center; justify-content: center; padding: 24px;
+            backdrop-filter: blur(16px);
+        }
+        .login-overlay.hidden { display: none; }
+        .login-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-width: 420px; width: 100%; padding: 48px; text-align: center; animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .login-modal .lock-icon { font-size: 48px; margin-bottom: 20px; }
+        .login-modal h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 8px; }
+        .login-modal p { color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
+        .login-modal input { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 16px; font-family: inherit; text-align: center; letter-spacing: 4px; margin-bottom: 16px; transition: var(--transition); }
+        .login-modal input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+        .login-error { color: var(--danger); font-size: 13px; margin-bottom: 12px; display: none; }
+        .login-error.visible { display: block; }
+
+        /* ── MAIN CONTENT ── */
+        .main-content { padding-top: 72px; display: none; }
+        .main-content.visible { display: block; }
+
+        /* ── STATS ── */
+        .stats-bar { max-width: 1200px; margin: 0 auto; padding: 40px 24px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .stat-card { text-align: center; padding: 32px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); }
+        .stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+        .stat-icon { font-size: 28px; margin-bottom: 12px; }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ── SECTIONS ── */
+        .section { max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; letter-spacing: -1px; }
+        .section-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+
+        /* ── UPLOAD ZONE ── */
+        .upload-zone { border: 2px dashed var(--border); border-radius: var(--radius-lg); padding: 56px 40px; text-align: center; transition: var(--transition); cursor: pointer; background: var(--bg-glass); position: relative; overflow: hidden; }
+        .upload-zone::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--gold-glow), transparent 70%); opacity: 0; transition: var(--transition); }
+        .upload-zone:hover::before, .upload-zone.dragover::before { opacity: 1; }
+        .upload-zone:hover, .upload-zone.dragover { border-color: var(--gold); }
+        .upload-icon { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%; background: var(--gold-glow); display: flex; align-items: center; justify-content: center; font-size: 28px; }
+        .upload-zone h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .upload-zone p { color: var(--text-muted); font-size: 14px; }
+        .upload-zone .formats { display: inline-flex; gap: 8px; margin-top: 16px; }
+        .upload-zone .format-tag { padding: 4px 12px; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border); font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+        #fileInput { display: none; }
+
+        /* ── UPLOAD FORM ── */
+        .upload-form { display: none; }
+        .upload-form.visible { display: block; animation: fadeInUp 0.4s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; position: relative; overflow: hidden; }
+        .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold)); }
+        .form-preview { display: flex; gap: 28px; margin-bottom: 28px; }
+        .form-preview-img { width: 220px; height: 220px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); display: none; }
+        .form-preview-img.visible { display: block; }
+        .form-fields { flex: 1; display: flex; flex-direction: column; gap: 18px; }
+        .form-group label { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-family: inherit; transition: var(--transition); }
+        .form-group textarea { resize: vertical; min-height: 110px; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.6; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+        .form-group select option { background: var(--bg-card); color: var(--text); }
+        .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+
+        /* ── QUOTES LIST ── */
+        .quotes-list { display: flex; flex-direction: column; gap: 12px; }
+        .quote-row { display: flex; align-items: center; gap: 20px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); }
+        .quote-row:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+        .quote-row-img { width: 72px; height: 72px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; }
+        .quote-row-img-placeholder { width: 72px; height: 72px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card)); display: flex; align-items: center; justify-content: center; font-size: 28px; opacity: 0.3; flex-shrink: 0; border: 1px solid var(--border); }
+        .quote-row-content { flex: 1; min-width: 0; }
+        .quote-row-text { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; line-height: 1.5; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .quote-row-meta { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; }
+        .quote-row-author { color: var(--text-secondary); font-weight: 500; }
+        .quote-row-category { padding: 3px 10px; border-radius: 100px; background: var(--gold-glow); color: var(--gold); font-size: 11px; font-weight: 600; }
+        .quote-row-actions { display: flex; gap: 8px; flex-shrink: 0; }
+        .quote-row-actions .btn { padding: 8px 14px; font-size: 12px; }
+
+        /* ── EMPTY STATE ── */
+        .empty-state { text-align: center; padding: 80px 24px; color: var(--text-muted); }
+        .empty-state .icon { font-size: 64px; margin-bottom: 16px; opacity: 0.3; }
+        .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text); margin-bottom: 8px; }
+
+        /* ── TOAST ── */
+        .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px); padding: 14px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; z-index: 2000; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-lg); white-space: nowrap; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { border-color: rgba(34,197,94,0.3); }
+        .toast.error { border-color: rgba(239,68,68,0.3); }
+
+        /* ── FOOTER ── */
+        .footer { padding: 40px 24px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; margin-top: 40px; }
+        .footer a { color: var(--gold); text-decoration: none; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .navbar { padding: 0 16px; }
+            .nav-inner { height: 60px; }
+            .nav-logo-text { font-size: 16px; }
+            .nav-logo-sub { display: none; }
+            .main-content { padding-top: 60px; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 24px 16px 0; }
+            .stat-card { padding: 20px 12px; }
+            .stat-num { font-size: 28px; }
+            .section { padding: 32px 16px; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .form-preview { flex-direction: column; align-items: center; }
+            .form-preview-img { width: 100%; max-width: 300px; }
+            .quote-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .quote-row-actions { width: 100%; }
+            .quote-row-actions .btn { flex: 1; justify-content: center; }
+            .login-modal { padding: 32px 24px; }
+            .upload-zone { padding: 36px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- AMBIENT -->
+    <div class="ambient">
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-modal" onclick="event.stopPropagation()">
+            <div class="lock-icon">🔐</div>
+            <h2>Admin Panel</h2>
+            <p>Masukkan password admin untuk mengelola konten Galeri Kata</p>
+            <input type="password" id="loginPassword" placeholder="••••••••" autofocus onkeydown="if(event.key==='Enter')attemptLogin()">
+            <div class="login-error" id="loginError">❌ Password salah</div>
+            <button class="btn btn-gold" onclick="attemptLogin()" style="width:100%;justify-content:center;padding:14px">Masuk</button>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon">✦</div>
+                <div>
+                    <div class="nav-logo-text">Galeri Kata — Admin Panel</div>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <div class="admin-badge">👑 Admin</div>
+                <a href="index.html" class="btn btn-ghost">🏠 Situs</a>
+                <button class="btn btn-ghost" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content" id="mainContent">
+
+        <!-- STATS -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-num" id="statTotal">0</div>
+                <div class="stat-label">Total Kutipan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✍️</div>
+                <div class="stat-num" id="statAuthors">0</div>
+                <div class="stat-label">Penulis</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <div class="stat-num" id="statCategories">0</div>
+                <div class="stat-label">Kategori</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🖼️</div>
+                <div class="stat-num" id="statImages">0</div>
+                <div class="stat-label">Dengan Foto</div>
+            </div>
+        </div>
+
+        <!-- UPLOAD -->
+        <div class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Tambah Kutipan Baru</h2>
+                    <p class="section-subtitle">Upload foto dan tambahkan kutipan inspiratif</p>
+                </div>
+            </div>
+
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📷</div>
+                <h3>Seret foto ke sini atau klik untuk upload</h3>
+                <p>Tambahkan foto dan kutipan favoritmu</p>
+                <div class="formats">
+                    <span class="format-tag">JPG</span><span class="format-tag">PNG</span>
+                    <span class="format-tag">WEBP</span><span class="format-tag">MAX 10MB</span>
+                </div>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
+
+            <div class="upload-form" id="uploadForm">
+                <div class="form-card" style="margin-top:20px">
+                    <div class="form-preview">
+                        <img class="form-preview-img" id="previewImage" src="" alt="Preview">
+                        <div class="form-fields">
+                            <div class="form-group">
+                                <label>Kutipan</label>
+                                <textarea id="quoteText" placeholder="Tulis kutipan yang menginspirasi..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Nama Penulis</label>
+                                <input type="text" id="authorName" placeholder="Siapa penulisnya?">
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select id="quoteCategory">
+                                    <option value="motivasi">💪 Motivasi</option>
+                                    <option value="cinta">❤️ Cinta</option>
+                                    <option value="kehidupan">🌱 Kehidupan</option>
+                                    <option value="filsafat">🧠 Filsafat</option>
+                                    <option value="sastra">📖 Sastra</option>
+                                    <option value="inspirasi">✨ Inspirasi</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Sumber (opsional)</label>
+                                <input type="text" id="quoteSource" placeholder="Judul buku, pidato, dll.">
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-ghost" onclick="cancelUpload()">Batal</button>
+                                <button class="btn btn-gold" onclick="publishQuote()">✦ Terbitkan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALL QUOTES -->
+        <div class="section" style="padding-top:0">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Semua Kutipan</h2>
+                    <p class="section-subtitle" id="quotesCount">0 kutipan</p>
+                </div>
+                <div style="display:flex;gap:8px">
+                    <button class="btn btn-ghost" onclick="sortQuotes('newest')">Terbaru</button>
+                    <button class="btn btn-ghost" onclick="sortQuotes('author')">A-Z</button>
+                </div>
+            </div>
+            <div class="quotes-list" id="quotesList"></div>
+            <div class="empty-state" id="emptyState" style="display:none">
+                <div class="icon">📝</div>
+                <h3>Belum ada kutipan</h3>
+                <p>Upload foto pertamamu dan tambahkan kutipan bermakna</p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><a href="index.html">Galeri Kata</a> — Admin Panel &copy; 2024</p>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ── PASSWORD HASH ──
+        const ADMIN_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+
+        async function sha256(str) {
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ── LOGIN ──
+        async function attemptLogin() {
+            const pw = document.getElementById('loginPassword').value;
+            const hash = await sha256(pw);
+            if (hash === ADMIN_HASH) {
+                sessionStorage.setItem('galeri_admin', '1');
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+                loadQuotes();
+            } else {
+                const err = document.getElementById('loginError');
+                err.classList.add('visible');
+                document.getElementById('loginPassword').value = '';
+                setTimeout(() => err.classList.remove('visible'), 3000);
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('galeri_admin');
+            location.reload();
+        }
+
+        // ── INIT ──
+        if (sessionStorage.getItem('galeri_admin') === '1') {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+        }
+
+        // ── DATA ──
+        const STORAGE_KEY = 'galeri_kata_quotes';
+        let currentSort = 'newest';
+        let uploadedImage = null;
+
+        function getQuotes() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+            catch { return []; }
+        }
+
+        function saveQuotes(quotes) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(quotes));
+        }
+
+        // ── STATS ──
+        function updateStats(quotes) {
+            document.getElementById('statTotal').textContent = quotes.length;
+            document.getElementById('statAuthors').textContent = new Set(quotes.map(q => q.author)).size;
+            document.getElementById('statCategories').textContent = new Set(quotes.map(q => q.category)).size;
+            document.getElementById('statImages').textContent = quotes.filter(q => q.image).length;
+            document.getElementById('quotesCount').textContent = quotes.length + ' kutipan';
+        }
+
+        // ── RENDER LIST ──
+        function loadQuotes() {
+            let quotes = getQuotes();
+            if (currentSort === 'newest') quotes.sort((a, b) => (b.date || 0) - (a.date || 0));
+            else quotes.sort((a, b) => (a.author || '').localeCompare(b.author || ''));
+
+            updateStats(quotes);
+
+            const list = document.getElementById('quotesList');
+            const empty = document.getElementById('emptyState');
+
+            if (quotes.length === 0) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            const categoryEmoji = { motivasi: '💪', cinta: '❤️', kehidupan: '🌱', filsafat: '🧠', sastra: '📖', inspirasi: '✨' };
+
+            list.innerHTML = quotes.map((q, i) => `
+                <div class="quote-row" data-id="${q.id || i}">
+                    ${q.image
+                        ? `<img class="quote-row-img" src="${q.image}" alt="">`
+                        : `<div class="quote-row-img-placeholder">✦</div>`
+                    }
+                    <div class="quote-row-content">
+                        <div class="quote-row-text">"${escapeHtml(q.text || '')}"</div>
+                        <div class="quote-row-meta">
+                            <span class="quote-row-author">${escapeHtml(q.author || 'Tanpa Nama')}</span>
+                            <span class="quote-row-category">${categoryEmoji[q.category] || '🏷️'} ${q.category || 'Umum'}</span>
+                            ${q.source ? `<span>📚 ${escapeHtml(q.source)}</span>` : ''}
+                            <span>${q.date ? new Date(q.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
+                        </div>
+                    </div>
+                    <div class="quote-row-actions">
+                        <button class="btn btn-danger" onclick="deleteQuote('${q.id}')">🗑 Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function sortQuotes(sort) {
+            currentSort = sort;
+            loadQuotes();
+        }
+
+        // ── UPLOAD ──
+        const uploadZone = document.getElementById('uploadZone');
+
+        uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+        uploadZone.addEventListener('drop', e => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) processFile(file);
+        });
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) processFile(file);
+        }
+
+        function processFile(file) {
+            if (file.size > 10 * 1024 * 1024) { showToast('File terlalu besar (max 10MB)', 'error'); return; }
+            const reader = new FileReader();
+            reader.onload = e => {
+                uploadedImage = e.target.result;
+                document.getElementById('previewImage').src = uploadedImage;
+                document.getElementById('previewImage').classList.add('visible');
+                document.getElementById('uploadForm').classList.add('visible');
+                document.getElementById('quoteText').focus();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function cancelUpload() {
+            uploadedImage = null;
+            document.getElementById('uploadForm').classList.remove('visible');
+            document.getElementById('previewImage').classList.remove('visible');
+            document.getElementById('previewImage').src = '';
+            document.getElementById('quoteText').value = '';
+            document.getElementById('authorName').value = '';
+            document.getElementById('quoteSource').value = '';
+            document.getElementById('fileInput').value = '';
+        }
+
+        function publishQuote() {
+            const text = document.getElementById('quoteText').value.trim();
+            const author = document.getElementById('authorName').value.trim();
+            const category = document.getElementById('quoteCategory').value;
+            const source = document.getElementById('quoteSource').value.trim();
+
+            if (!text) { showToast('Kutipan tidak boleh kosong', 'error'); return; }
+            if (!author) { showToast('Nama penulis wajib diisi', 'error'); return; }
+
+            const quotes = getQuotes();
+            quotes.push({
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                text, author, category, source,
+                image: uploadedImage || null,
+                date: Date.now()
+            });
+            saveQuotes(quotes);
+            cancelUpload();
+            loadQuotes();
+            showToast('✓ Kutipan berhasil ditambahkan', 'success');
+        }
+
+        // ── DELETE ──
+        function deleteQuote(id) {
+            if (!confirm('Yakin ingin menghapus kutipan ini?')) return;
+            let quotes = getQuotes();
+            quotes = quotes.filter(q => q.id !== id);
+            saveQuotes(quotes);
+            loadQuotes();
+            showToast('🗑 Kutipan berhasil dihapus', 'success');
+        }
+
+        // ── UTILS ──
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ── INIT LOAD ──
+        if (sessionStorage.getItem('galeri_admin') === '1') loadQuotes();
+    </script>
+</body>
+</html>

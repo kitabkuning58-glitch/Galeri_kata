@@ -113,18 +113,8 @@
         .btn-gold:hover { box-shadow: 0 4px 24px var(--gold-glow-strong); transform: translateY(-1px); }
         .btn-ghost { background: var(--bg-glass); color: var(--text-secondary); border: 1px solid var(--border); }
         .btn-ghost:hover { background: var(--bg-card); color: var(--text); border-color: var(--border-hover); }
-        .btn-danger { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.2); }
-        .btn-danger:hover { background: rgba(239,68,68,0.2); }
         .btn-icon { width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer; transition: var(--transition); font-size: 18px; }
         .btn-icon:hover { background: var(--bg-card); color: var(--text); border-color: var(--border-hover); }
-
-        /* ── ADMIN BADGE ── */
-        .admin-badge {
-            display: none; align-items: center; gap: 6px; padding: 6px 14px;
-            border-radius: 100px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
-            color: var(--success); font-size: 12px; font-weight: 600;
-        }
-        .admin-badge.visible { display: inline-flex; }
 
         /* ── HERO ── */
         .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; position: relative; }
@@ -169,34 +159,6 @@
         .cat-pill:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg-glass); }
         .cat-pill.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
 
-        /* ── UPLOAD ZONE (ADMIN ONLY) ── */
-        .upload-section { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; display: none; }
-        .upload-section.admin-visible { display: block; }
-        .upload-zone { border: 2px dashed var(--border); border-radius: var(--radius-lg); padding: 56px 40px; text-align: center; transition: var(--transition); cursor: pointer; background: var(--bg-glass); position: relative; overflow: hidden; }
-        .upload-zone::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--gold-glow), transparent 70%); opacity: 0; transition: var(--transition); }
-        .upload-zone:hover::before, .upload-zone.dragover::before { opacity: 1; }
-        .upload-zone:hover, .upload-zone.dragover { border-color: var(--gold); }
-        .upload-icon { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%; background: var(--gold-glow); display: flex; align-items: center; justify-content: center; font-size: 28px; position: relative; }
-        .upload-zone h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-        .upload-zone p { color: var(--text-muted); font-size: 14px; }
-        .upload-zone .formats { display: inline-flex; gap: 8px; margin-top: 16px; }
-        .upload-zone .format-tag { padding: 4px 12px; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border); font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-        #fileInput { display: none; }
-
-        /* ── UPLOAD FORM (ADMIN ONLY) ── */
-        .upload-form { display: none; max-width: 800px; margin: 0 auto 80px; padding: 0 24px; }
-        .upload-form.visible { display: block; animation: fadeInUp 0.4s ease; }
-        .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; position: relative; overflow: hidden; }
-        .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold)); }
-        .form-preview { display: flex; gap: 28px; margin-bottom: 28px; }
-        .form-preview-img { width: 220px; height: 220px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
-        .form-fields { flex: 1; display: flex; flex-direction: column; gap: 18px; }
-        .form-group label { display: block; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 600; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 14px; font-family: inherit; transition: var(--transition); }
-        .form-group textarea { resize: vertical; min-height: 110px; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.6; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
-        .form-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
-
         /* ── GALLERY ── */
         .gallery-section { max-width: 1200px; margin: 0 auto; padding: 0 24px 120px; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
@@ -223,13 +185,6 @@
         .card-author-source { font-size: 12px; color: var(--text-muted); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .card-category { padding: 5px 12px; border-radius: 100px; background: var(--gold-glow); color: var(--gold); font-size: 11px; font-weight: 600; }
 
-        /* ── ADMIN ACTIONS ON CARD ── */
-        .card-admin-actions { display: none; position: absolute; top: 12px; right: 12px; gap: 6px; z-index: 5; }
-        .card-admin-actions.visible { display: flex; }
-        .card-admin-btn { width: 34px; height: 34px; border-radius: 8px; border: none; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); color: #fff; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        .card-admin-btn:hover { background: var(--danger); }
-        .card-admin-btn.edit-btn:hover { background: var(--gold); color: #000; }
-
         /* ── MODAL ── */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(16px); }
         .modal-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
@@ -247,20 +202,6 @@
         .modal-author-source { color: var(--text-muted); font-size: 14px; }
         .modal-meta { display: flex; gap: 32px; color: var(--text-muted); font-size: 13px; margin-bottom: 32px; }
         .modal-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-        .modal-admin-actions { display: none; gap: 12px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--border); margin-top: 24px; }
-        .modal-admin-actions.visible { display: flex; }
-
-        /* ── LOGIN MODAL ── */
-        .login-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(16px); }
-        .login-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
-        .login-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-width: 400px; width: 100%; padding: 48px; text-align: center; animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .login-modal .lock-icon { font-size: 48px; margin-bottom: 20px; }
-        .login-modal h2 { font-family: 'Playfair Display', serif; font-size: 28px; margin-bottom: 8px; }
-        .login-modal p { color: var(--text-secondary); font-size: 14px; margin-bottom: 28px; }
-        .login-modal input { width: 100%; padding: 14px 18px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 16px; font-family: inherit; text-align: center; letter-spacing: 4px; margin-bottom: 16px; transition: var(--transition); }
-        .login-modal input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
-        .login-modal .login-error { color: var(--danger); font-size: 13px; margin-bottom: 12px; display: none; }
-        .login-modal .login-error.visible { display: block; }
 
         /* ── DONATE ── */
         .donate-fab { position: fixed; bottom: 32px; right: 32px; z-index: 90; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
@@ -307,8 +248,6 @@
         /* ── FOOTER ── */
         .footer { padding: 40px 24px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
         .footer a { color: var(--gold); text-decoration: none; }
-        .footer-login { cursor: pointer; opacity: 0.3; transition: var(--transition); }
-        .footer-login:hover { opacity: 1; color: var(--gold); }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
@@ -322,9 +261,6 @@
             .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 12px; }
             .stat-card { padding: 20px 12px; }
             .stat-num { font-size: 28px; }
-            .upload-section { margin-bottom: 48px; }
-            .form-preview { flex-direction: column; align-items: center; }
-            .form-preview-img { width: 100%; max-width: 300px; }
             .gallery-grid { grid-template-columns: 1fr; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
             .modal-body { padding: 28px; }
@@ -337,7 +273,6 @@
             .card-image-wrap { height: 200px; }
             .categories { padding: 0 16px; }
             .cat-pill { padding: 8px 16px; font-size: 12px; }
-            .login-modal { padding: 32px 24px; }
         }
     </style>
 </head>
@@ -361,11 +296,7 @@
                 <a href="#collection" class="nav-link">Koleksi</a>
             </div>
             <div class="nav-actions">
-                <div class="admin-badge" id="adminBadge">👑 Admin</div>
                 <button class="btn-icon" onclick="toggleTheme()" id="themeBtn" title="Ganti tema">🌙</button>
-                <button class="btn btn-gold" id="uploadBtn" onclick="scrollToUpload()" style="display:none">✚ Upload</button>
-                <button class="btn btn-ghost" id="loginBtn" onclick="openLogin()">🔐</button>
-                <button class="btn btn-ghost" id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
             </div>
         </div>
     </nav>
@@ -403,45 +334,6 @@
         <div class="stat-card"><div class="stat-num" id="totalCategories">0</div><div class="stat-label">Kategori</div></div>
     </div>
 
-    <!-- UPLOAD (ADMIN ONLY) -->
-    <section class="upload-section" id="upload-section">
-        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <div class="upload-icon">📷</div>
-            <h3>Seret foto ke sini atau klik untuk upload</h3>
-            <p>Tambahkan foto dan kutipan favoritmu</p>
-            <div class="formats">
-                <span class="format-tag">JPG</span><span class="format-tag">PNG</span>
-                <span class="format-tag">WEBP</span><span class="format-tag">MAX 10MB</span>
-            </div>
-        </div>
-        <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
-    </section>
-
-    <!-- UPLOAD FORM (ADMIN ONLY) -->
-    <section class="upload-form" id="uploadForm">
-        <div class="form-card">
-            <div class="form-preview">
-                <img class="form-preview-img" id="previewImage" src="" alt="Preview">
-                <div class="form-fields">
-                    <div class="form-group"><label>Kutipan</label><textarea id="quoteText" placeholder="Tulis kutipan yang menginspirasi..."></textarea></div>
-                    <div class="form-group"><label>Nama Penulis</label><input type="text" id="authorName" placeholder="Siapa penulisnya?"></div>
-                    <div class="form-group"><label>Kategori</label>
-                        <select id="quoteCategory">
-                            <option value="motivasi">💪 Motivasi</option><option value="cinta">❤️ Cinta</option>
-                            <option value="kehidupan">🌱 Kehidupan</option><option value="filsafat">🧠 Filsafat</option>
-                            <option value="sastra">📖 Sastra</option><option value="inspirasi">✨ Inspirasi</option>
-                        </select>
-                    </div>
-                    <div class="form-group"><label>Sumber (opsional)</label><input type="text" id="quoteSource" placeholder="Judul buku, pidato, dll."></div>
-                    <div class="form-actions">
-                        <button class="btn btn-ghost" onclick="cancelUpload()">Batal</button>
-                        <button class="btn btn-gold" onclick="publishQuote()">✦ Terbitkan</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- COLLECTION -->
     <section class="gallery-section" id="collection">
         <div class="section-header">
@@ -462,7 +354,7 @@
         </div>
         <div class="gallery-grid" id="galleryGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none">
-            <div class="icon">🖼️</div><h3>Belum ada koleksi</h3><p>Upload foto pertamamu dan tambahkan kutipan bermakna</p>
+            <div class="icon">🖼️</div><h3>Belum ada koleksi</h3><p>Kutipan akan segera hadir</p>
         </div>
     </section>
 
@@ -482,22 +374,7 @@
                     <button class="btn btn-gold" onclick="copyQuote()">📋 Salin Kutipan</button>
                     <button class="btn btn-ghost" onclick="downloadImage()">⬇️ Download</button>
                 </div>
-                <div class="modal-admin-actions" id="modalAdminActions">
-                    <button class="btn btn-danger" onclick="deleteQuote()">🗑 Hapus Kutipan</button>
-                </div>
             </div>
-        </div>
-    </div>
-
-    <!-- LOGIN MODAL -->
-    <div class="login-overlay" id="loginOverlay" onclick="closeLogin(event)">
-        <div class="login-modal" onclick="event.stopPropagation()">
-            <div class="lock-icon">🔐</div>
-            <h2>Admin Login</h2>
-            <p>Masukkan password admin untuk mengelola konten</p>
-            <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')attemptLogin()">
-            <div class="login-error" id="loginError">❌ Password salah</div>
-            <button class="btn btn-gold" onclick="attemptLogin()" style="width:100%;justify-content:center">Masuk</button>
         </div>
     </div>
 
@@ -538,7 +415,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <p>✦ Galeri Kata — Koleksi Kutipan & Foto Penulis</p>
-        <p style="margin-top:8px">Dibuat dengan ❤️ · <a href="https://github.com/kitabkuning58-glitch/Galeri_kata" target="_blank">GitHub</a> · <span class="footer-login" onclick="openLogin()">⚙️</span></p>
+        <p style="margin-top:8px">Dibuat dengan ❤️ · <a href="https://github.com/kitabkuning58-glitch/Galeri_kata" target="_blank">GitHub</a></p>
     </footer>
 
     <script>
@@ -547,86 +424,11 @@
         let currentFilter = 'semua';
         let currentSort = 'newest';
         let currentQuoteId = null;
-        let tempImageData = null;
-        let isAdmin = false;
-
-        // ═══ ADMIN PASSWORD (ganti di sini!) ═══
-        // Default password: "galerikata2024"
-        // Untuk ganti password, hash baru di: https://emn178.github.io/online-tools/sha256.html
-        const ADMIN_PASSWORD_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'; // hash dari "galerikata2024"
-
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // ═══ ADMIN SYSTEM ═══
-        function checkAdmin() {
-            isAdmin = sessionStorage.getItem('galeri_admin') === 'true';
-            updateAdminUI();
-        }
-
-        function updateAdminUI() {
-            // Show/hide admin-only elements
-            document.querySelectorAll('.upload-section').forEach(el => el.classList.toggle('admin-visible', isAdmin));
-            document.getElementById('uploadBtn').style.display = isAdmin ? 'inline-flex' : 'none';
-            document.getElementById('adminBadge').classList.toggle('visible', isAdmin);
-            document.getElementById('loginBtn').style.display = isAdmin ? 'none' : 'inline-flex';
-            document.getElementById('logoutBtn').style.display = isAdmin ? 'inline-flex' : 'none';
-            document.getElementById('modalAdminActions').classList.toggle('visible', isAdmin);
-
-            // Show/hide admin actions on cards
-            document.querySelectorAll('.card-admin-actions').forEach(el => el.classList.toggle('visible', isAdmin));
-        }
-
-        function openLogin() {
-            document.getElementById('loginOverlay').classList.add('visible');
-            document.getElementById('loginPassword').value = '';
-            document.getElementById('loginError').classList.remove('visible');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => document.getElementById('loginPassword').focus(), 100);
-        }
-
-        function closeLogin(e) {
-            if (e && e.target !== e.currentTarget) return;
-            document.getElementById('loginOverlay').classList.remove('visible');
-            document.body.style.overflow = '';
-        }
-
-        async function attemptLogin() {
-            const input = document.getElementById('loginPassword').value;
-            const hash = await hashPassword(input);
-
-            if (hash === ADMIN_PASSWORD_HASH) {
-                isAdmin = true;
-                sessionStorage.setItem('galeri_admin', 'true');
-                updateAdminUI();
-                closeLogin();
-                renderGallery();
-                showToast('✅ Login berhasil! Selamat datang, Admin.');
-            } else {
-                document.getElementById('loginError').classList.add('visible');
-                document.getElementById('loginPassword').value = '';
-            }
-        }
-
-        function logout() {
-            isAdmin = false;
-            sessionStorage.removeItem('galeri_admin');
-            updateAdminUI();
-            renderGallery();
-            showToast('👋 Logout berhasil.');
-        }
 
         // ═══ INIT ═══
         document.addEventListener('DOMContentLoaded', () => {
-            checkAdmin();
             renderGallery();
             updateStats();
-            initDragDrop();
             initScrollEffects();
             initFeaturedRotation();
         });
@@ -669,49 +471,6 @@
             }
         }
 
-        // ═══ DRAG & DROP ═══
-        function initDragDrop() {
-            const zone = document.getElementById('uploadZone');
-            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
-            zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-            zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files[0]?.type?.startsWith('image/')) processFile(e.dataTransfer.files[0]); });
-        }
-
-        function handleFileSelect(e) { if (e.target.files[0]) processFile(e.target.files[0]); }
-
-        function processFile(file) {
-            if (file.size > 10 * 1024 * 1024) { showToast('⚠️ File terlalu besar (max 10MB)'); return; }
-            const reader = new FileReader();
-            reader.onload = e => {
-                tempImageData = e.target.result;
-                document.getElementById('previewImage').src = tempImageData;
-                document.getElementById('uploadForm').classList.add('visible');
-                document.getElementById('uploadForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // ═══ PUBLISH (ADMIN ONLY) ═══
-        function publishQuote() {
-            if (!isAdmin) return;
-            const quote = document.getElementById('quoteText').value.trim();
-            const author = document.getElementById('authorName').value.trim();
-            const category = document.getElementById('quoteCategory').value;
-            const source = document.getElementById('quoteSource').value.trim();
-            if (!quote || !author) { showToast('⚠️ Isi kutipan dan nama penulis'); return; }
-
-            quotes.unshift({ id: Date.now().toString(), image: tempImageData, quote, author, category, source, createdAt: new Date().toISOString() });
-            saveQuotes(); renderGallery(); updateStats(); cancelUpload();
-            showToast('✅ Kutipan berhasil dipublikasikan!');
-        }
-
-        function cancelUpload() {
-            tempImageData = null;
-            document.getElementById('uploadForm').classList.remove('visible');
-            ['quoteText', 'authorName', 'quoteSource'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('fileInput').value = '';
-        }
-
         // ═══ RENDER ═══
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
@@ -726,9 +485,6 @@
 
             grid.innerHTML = filtered.map(q => `
                 <div class="quote-card" onclick="openModal('${q.id}')">
-                    <div class="card-admin-actions ${isAdmin ? 'visible' : ''}">
-                        <button class="card-admin-btn" onclick="event.stopPropagation();deleteQuoteById('${q.id}')" title="Hapus">🗑</button>
-                    </div>
                     <div class="card-image-wrap">
                         ${q.image ? `<img class="card-image" src="${q.image}" alt="${q.author}" loading="lazy">` : `<div class="card-image-placeholder">✦</div>`}
                         <div class="card-overlay">
@@ -764,7 +520,6 @@
             document.getElementById('modalSource').textContent = q.source || getCategoryLabel(q.category);
             document.getElementById('modalDate').textContent = '📅 ' + new Date(q.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             document.getElementById('modalCategory').textContent = getCategoryLabel(q.category);
-            document.getElementById('modalAdminActions').classList.toggle('visible', isAdmin);
             document.getElementById('modalOverlay').classList.add('visible');
             document.body.style.overflow = 'hidden';
         }
@@ -774,20 +529,6 @@
         function copyQuote() { const q = quotes.find(x => x.id === currentQuoteId); if (!q) return; navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`); showToast('📋 Kutipan disalin!'); }
         function copyQuoteById(id) { const q = quotes.find(x => x.id === id); if (!q) return; navigator.clipboard.writeText(`"${q.quote}" — ${q.author}`); showToast('📋 Kutipan disalin!'); }
         function downloadImage() { const q = quotes.find(x => x.id === currentQuoteId); if (!q?.image) return; const a = document.createElement('a'); a.href = q.image; a.download = `${q.author.replace(/\s+/g, '_')}_quote.jpg`; a.click(); }
-
-        function deleteQuote() {
-            if (!isAdmin) return;
-            if (!confirm('Hapus kutipan ini?')) return;
-            quotes = quotes.filter(x => x.id !== currentQuoteId); saveQuotes(); closeModal(); renderGallery(); updateStats();
-            showToast('🗑 Kutipan dihapus');
-        }
-
-        function deleteQuoteById(id) {
-            if (!isAdmin) return;
-            if (!confirm('Hapus kutipan ini?')) return;
-            quotes = quotes.filter(x => x.id !== id); saveQuotes(); renderGallery(); updateStats();
-            showToast('🗑 Kutipan dihapus');
-        }
 
         function filterByCategory(cat, el) { currentFilter = cat; document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active')); el.classList.add('active'); renderGallery(); }
         function sortGallery(sort) { currentSort = sort; renderGallery(); }
@@ -801,7 +542,6 @@
         document.addEventListener('click', e => { const fab = document.querySelector('.donate-fab'); if (fab && !fab.contains(e.target)) document.getElementById('donateMenu').classList.remove('visible'); });
 
         // ═══ HELPERS ═══
-        function saveQuotes() { localStorage.setItem('galeri_kata_quotes', JSON.stringify(quotes)); }
         function updateStats() {
             document.getElementById('totalQuotes').textContent = quotes.length;
             document.getElementById('totalAuthors').textContent = new Set(quotes.map(q => q.author)).size;
@@ -809,12 +549,11 @@
         }
         function getCategoryLabel(cat) { return { motivasi: '💪 Motivasi', cinta: '❤️ Cinta', kehidupan: '🌱 Kehidupan', filsafat: '🧠 Filsafat', sastra: '📖 Sastra', inspirasi: '✨ Inspirasi' }[cat] || cat; }
         function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
-        function scrollToUpload() { document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' }); }
         function scrollToCollection() { document.getElementById('collection').scrollIntoView({ behavior: 'smooth' }); }
         function toggleTheme() { const html = document.documentElement; const isLight = html.getAttribute('data-theme') === 'light'; html.setAttribute('data-theme', isLight ? '' : 'light'); document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀️'; localStorage.setItem('galeri_kata_theme', isLight ? 'dark' : 'light'); }
         if (localStorage.getItem('galeri_kata_theme') === 'light') { document.documentElement.setAttribute('data-theme', 'light'); setTimeout(() => { document.getElementById('themeBtn').textContent = '☀️'; }, 0); }
         function showToast(msg) { const toast = document.getElementById('toast'); toast.textContent = msg; toast.className = 'toast show'; setTimeout(() => toast.className = 'toast', 3000); }
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeDonateModal(); closeLogin(); document.getElementById('donateMenu').classList.remove('visible'); } });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeDonateModal(); document.getElementById('donateMenu').classList.remove('visible'); } });
 
         // ═══ SAMPLE DATA ═══
         if (quotes.length === 0) {
@@ -826,7 +565,8 @@
                 { id: 's5', image: null, quote: 'Manusia yang hebat lahir dari kegagalan, bukan dari kesuksesan.', author: 'Andrea Hirata', category: 'sastra', source: 'Laskar Pelangi', createdAt: new Date(Date.now() - 432000000).toISOString() },
                 { id: 's6', image: null, quote: 'Aku berpikir, maka aku ada.', author: 'René Descartes', category: 'filsafat', source: 'Principia Philosophiae', createdAt: new Date(Date.now() - 518400000).toISOString() }
             ];
-            saveQuotes(); renderGallery(); updateStats();
+            localStorage.setItem('galeri_kata_quotes', JSON.stringify(quotes));
+            renderGallery(); updateStats();
         }
     </script>
 </body>
