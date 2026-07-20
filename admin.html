@@ -362,7 +362,7 @@
 
     <script>
         // ── PASSWORD HASH ──
-        const ADMIN_HASH = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+        const ADMIN_HASH = 'fdbdf2c937ed751d949844126661bd78355ca1406c6b4ca5e43219fd9e9c705d';
 
         async function sha256(str) {
             const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
